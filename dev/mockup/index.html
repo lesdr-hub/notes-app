@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[ noted ]</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cascadia+Mono:ital,wght@0,200..700;1,200..700&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="topbar-left">
+    <div class="logo">[ noted ]</div>
+  </div>
+
+  <div class="topbar-right">
+    <button class="icon-btn" title="Refresh"><span class="material-icons">refresh</span></button>
+    <button class="icon-btn" title="Settings"><span class="material-icons">settings</span></button>
+    <div class="avatar">A</div>
+  </div>
+</header>
+
+
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <a class="nav-item active">
+    <span class="material-icons">lightbulb</span>
+    Notes
+  </a>
+  <a class="nav-item">
+    <span class="material-icons">notifications</span>
+    Reminders
+  </a>
+  <a class="nav-item">
+    <span class="material-icons">archive</span>
+    Archive
+  </a>
+  <a class="nav-item">
+    <span class="material-icons">delete</span>
+    Trash
+  </a>
+</nav>
+
+
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- NEW NOTE BAR -->
+  <div class="new-note-bar">
+    <div class="new-note-input">
+      <span class="placeholder">Take a note…</span>
+      <span class="spacer"></span>
+      <span class="material-icons">check_box</span>
+      <span class="material-icons">brush</span>
+      <span class="material-icons">image</span>
+    </div>
+  </div>
+
+  <!-- PINNED NOTES -->
+  <div class="pinned-section">
+    <div class="section-label">Pinned</div>
+    <div class="notes-grid">
+
+      <div class="note-card yellow pinned">
+        <span class="material-icons pin-icon">push_pin</span>
+        <div class="note-title">Grocery List</div>
+        <ul class="checklist">
+          <li><span class="cb"></span>Almond milk</li>
+          <li><span class="cb"></span>Greek yoghurt</li>
+          <li class="done"><span class="cb"></span>Eggs</li>
+          <li class="done"><span class="cb"></span>Bread</li>
+          <li><span class="cb"></span>Avocados × 3</li>
+        </ul>
+        <div class="card-actions">
+          <button class="icon-btn"><span class="material-icons">add_alert</span></button>
+          <button class="icon-btn"><span class="material-icons">person_add</span></button>
+          <button class="icon-btn"><span class="material-icons">color_lens</span></button>
+          <button class="icon-btn"><span class="material-icons">image</span></button>
+          <button class="icon-btn"><span class="material-icons">more_vert</span></button>
+        </div>
+      </div>
+
+      <div class="note-card pinned">
+        <span class="material-icons pin-icon">push_pin</span>
+        <div class="note-title">Q3 Product Roadmap</div>
+        <div class="note-body">Finalise feature scope for mobile app redesign. Confirm design handoff by end of June. Engineering sprint planning on the 14th.</div>
+        <div class="note-labels">
+          <span class="note-label-chip">Work</span>
+        </div>
+        <div class="card-actions">
+          <button class="icon-btn"><span class="material-icons">add_alert</span></button>
+          <button class="icon-btn"><span class="material-icons">person_add</span></button>
+          <button class="icon-btn"><span class="material-icons">color_lens</span></button>
+          <button class="icon-btn"><span class="material-icons">image</span></button>
+          <button class="icon-btn"><span class="material-icons">more_vert</span></button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- OTHER NOTES -->
+  <div class="others-section">
+    <div class="section-label">Others</div>
+    <div class="notes-grid">
+
+      <div class="note-card blue">
+        <span class="material-icons pin-icon">push_pin</span>
+        <div class="note-title">Books to read</div>
+        <ul class="checklist">
+          <li><span class="cb"></span>The Phoenix Project</li>
+          <li><span class="cb"></span>Thinking, Fast and Slow</li>
+          <li class="done"><span class="cb"></span>Atomic Habits</li>
+          <li><span class="cb"></span>Deep Work</li>
+        </ul>
+        <div class="note-labels">
+          <span class="note-label-chip">Reading list</span>
+          <span class="note-label-chip">Personal</span>
+        </div>
+        <div class="card-actions">
+          <button class="icon-btn"><span class="material-icons">add_alert</span></button>
+          <button class="icon-btn"><span class="material-icons">person_add</span></button>
+          <button class="icon-btn"><span class="material-icons">color_lens</span></button>
+          <button class="icon-btn"><span class="material-icons">image</span></button>
+          <button class="icon-btn"><span class="material-icons">more_vert</span></button>
+        </div>
+      </div>
+
+      <div class="note-card">
+        <span class="material-icons pin-icon">push_pin</span>
+        <div class="note-title">Morning routine</div>
+        <div class="note-body">Wake 6 am → 15 min stretch → cold shower → journaling → no phone for first hour.</div>
+        <div class="reminder-chip">
+          <span class="material-icons">alarm</span>
+          Tomorrow, 6:00 AM
+        </div>
+        <div class="card-actions">
+          <button class="icon-btn"><span class="material-icons">add_alert</span></button>
+          <button class="icon-btn"><span class="material-icons">person_add</span></button>
+          <button class="icon-btn"><span class="material-icons">color_lens</span></button>
+          <button class="icon-btn"><span class="material-icons">image</span></button>
+          <button class="icon-btn"><span class="material-icons">more_vert</span></button>
+        </div>
+      </div>
+
+      <div class="note-card green">
+        <span class="material-icons pin-icon">push_pin</span>
+        <div class="note-title">Garden notes</div>
+        <div class="note-body">Tomatoes need watering every 2 days. Basil can go outside from mid-June. Check slugs near the raised bed — try copper tape.</div>
+        <div class="card-actions">
+          <button class="icon-btn"><span class="material-icons">add_alert</span></button>
+          <button class="icon-btn"><span class="material-icons">person_add</span></button>
+          <button class="icon-btn"><span class="material-icons">color_lens</span></button>
+          <button class="icon-btn"><span class="material-icons">image</span></button>
+          <button class="icon-btn"><span class="material-icons">more_vert</span></button>
+        </div>
+      </div>
+
+      <div class="note-card purple">
+        <span class="material-icons pin-icon">push_pin</span>
+        <div class="note-title">Design system tokens</div>
+        <div class="note-body">
+          Primary: #1A73E8<br>
+          Surface: #F1F3F4<br>
+          Text: #202124<br>
+          Corner radius: 8px / 24px<br>
+          Motion: 150ms ease-out
+        </div>
+        <div class="note-labels">
+          <span class="note-label-chip">Work</span>
+          <span class="note-label-chip">Ideas</span>
+        </div>
+        <div class="card-actions">
+          <button class="icon-btn"><span class="material-icons">add_alert</span></button>
+          <button class="icon-btn"><span class="material-icons">person_add</span></button>
+          <button class="icon-btn"><span class="material-icons">color_lens</span></button>
+          <button class="icon-btn"><span class="material-icons">image</span></button>
+          <button class="icon-btn"><span class="material-icons">more_vert</span></button>
+        </div>
+      </div>
+
+      <div class="note-card red">
+        <span class="material-icons pin-icon">push_pin</span>
+        <div class="note-title">Flight details ✈️</div>
+        <div class="note-body">AC 856 · YVR → LHR<br>Departs 15 Jun, 21:55<br>Arrives 16 Jun, 15:10<br>Seat 22A · Terminal M</div>
+        <div class="reminder-chip">
+          <span class="material-icons">alarm</span>
+          Jun 15, 8:00 PM
+        </div>
+        <div class="card-actions">
+          <button class="icon-btn"><span class="material-icons">add_alert</span></button>
+          <button class="icon-btn"><span class="material-icons">person_add</span></button>
+          <button class="icon-btn"><span class="material-icons">color_lens</span></button>
+          <button class="icon-btn"><span class="material-icons">image</span></button>
+          <button class="icon-btn"><span class="material-icons">more_vert</span></button>
+        </div>
+      </div>
+
+      <div class="note-card">
+        <span class="material-icons pin-icon">push_pin</span>
+        <div class="note-title">Ideas dump</div>
+        <div class="note-body">Browser extension that summarises meeting transcripts. Habit tracker that syncs with calendar. Recipe app that builds a grocery list automatically.</div>
+        <div class="note-labels">
+          <span class="note-label-chip">Ideas</span>
+        </div>
+        <div class="card-actions">
+          <button class="icon-btn"><span class="material-icons">add_alert</span></button>
+          <button class="icon-btn"><span class="material-icons">person_add</span></button>
+          <button class="icon-btn"><span class="material-icons">color_lens</span></button>
+          <button class="icon-btn"><span class="material-icons">image</span></button>
+          <button class="icon-btn"><span class="material-icons">more_vert</span></button>
+        </div>
+      </div>
+
+      <div class="note-card teal">
+        <span class="material-icons pin-icon">push_pin</span>
+        <div class="note-body">Remember to call the dentist before Thursday — check insurance coverage first.</div>
+        <div class="reminder-chip">
+          <span class="material-icons">alarm</span>
+          Wed, 9:00 AM
+        </div>
+        <div class="card-actions">
+          <button class="icon-btn"><span class="material-icons">add_alert</span></button>
+          <button class="icon-btn"><span class="material-icons">person_add</span></button>
+          <button class="icon-btn"><span class="material-icons">color_lens</span></button>
+          <button class="icon-btn"><span class="material-icons">image</span></button>
+          <button class="icon-btn"><span class="material-icons">more_vert</span></button>
+        </div>
+      </div>
+
+      <div class="note-card gray">
+        <span class="material-icons pin-icon">push_pin</span>
+        <div class="note-title">Team standup notes</div>
+        <ul class="checklist">
+          <li class="done"><span class="cb"></span>Auth bug fixed — deploy tonight</li>
+          <li><span class="cb"></span>Dashboard performance PR review</li>
+          <li><span class="cb"></span>Onboarding flow UX review Thu</li>
+        </ul>
+        <div class="note-labels">
+          <span class="note-label-chip">Work</span>
+        </div>
+        <div class="card-actions">
+          <button class="icon-btn"><span class="material-icons">add_alert</span></button>
+          <button class="icon-btn"><span class="material-icons">person_add</span></button>
+          <button class="icon-btn"><span class="material-icons">color_lens</span></button>
+          <button class="icon-btn"><span class="material-icons">image</span></button>
+          <button class="icon-btn"><span class="material-icons">more_vert</span></button>
+        </div>
+      </div>
+
+      <div class="note-card pink">
+        <span class="material-icons pin-icon">push_pin</span>
+        <div class="note-title">Gift ideas 🎁</div>
+        <div class="note-body">Mum: weighted blanket or cookbook. Dad: Bluetooth headphones. Jamie: film camera or journal set.</div>
+        <div class="note-labels">
+          <span class="note-label-chip">Personal</span>
+        </div>
+        <div class="card-actions">
+          <button class="icon-btn"><span class="material-icons">add_alert</span></button>
+          <button class="icon-btn"><span class="material-icons">person_add</span></button>
+          <button class="icon-btn"><span class="material-icons">color_lens</span></button>
+          <button class="icon-btn"><span class="material-icons">image</span></button>
+          <button class="icon-btn"><span class="material-icons">more_vert</span></button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+</body>
+</html>
