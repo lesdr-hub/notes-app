@@ -45,10 +45,9 @@ options:
 #### Note
 Fields:
 **userId**
-`type:` string, 
+`type:` objectId ("User"), 
 `index:` true, 
 `required:` true, 
-`unique:` true
 
 **title**
 `type:` string, 
@@ -136,3 +135,6 @@ Updates user preferences.
 
 ## Testing
 Unit tests for models, integration tests for API routes
+
+// =============================
+save this for dividers
