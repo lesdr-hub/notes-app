@@ -33,7 +33,7 @@ Fields:
 `minLength:` 8
 
 **preferences**
-`type:` Object, 
+`type:` `preferences` Object, 
 `required:` true, 
 options:
 - **theme**
@@ -114,6 +114,14 @@ Gets `settings.ejs` and renders it
 > Note: Only settings are required for now. Later will have multiple pages to render
 
 ### API
+#### User
+- **PATCH** /api/users
+Updates user email, password, or preferences (likely the latter). Filter object with runValidators to ensure success. 
+- **DELETE** /api/users
+Deletes user and logs out. 
+
+> We don't need :id params as there is only one user object associated with each user, and with authentication user should already be attached to the request object. 
+
 #### Note
 - **GET** /api/notes
 Gets all notes. 
