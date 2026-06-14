@@ -2,13 +2,12 @@
 // controllers/note.js
 // ============================= 
 // Handles note route endpoints
+// API - return with .json(), errors passed to error handler 
 
 // ============================= 
 // IMPORTS
 // ============================= 
-
-const mongoose = require("mongoose"); 
-const Note = require("../models/Note.js");
+const Note = require("../../models/Note.js");
 
 // ============================= 
 // CONTROLLERS
@@ -28,8 +27,8 @@ exports.getAllNotes = async (req, res, next) => {
         res.status(200).json({ pinntedNotes, unpinnedNotes, message: "Notes retrieved successfully." });
     } catch(error) {
         next(error);
-    }
-}
+    };
+};
 
 // GET /api/notes/:id
 exports.getNoteById = async (req, res, next) => {
@@ -44,8 +43,8 @@ exports.getNoteById = async (req, res, next) => {
         res.status(200).json({ note, message: "Note retrieved successfully" });
     } catch {
         next(error); 
-    }
-}
+    };
+};
 
 // POST /api/notes
 exports.postNote = async (req, res, next) => {
@@ -59,13 +58,15 @@ exports.postNote = async (req, res, next) => {
             pinned: req.body.pinned
         });
         if (note.isEmpty()) {
-            return res.status(200).json({ message: "Deleting empty note." })
+            return res.status(200).json({ message: "Deleting empty note." });
         }
+        note.save();
+        
         res.json({ note, message: "Successfully created note."});
     } catch(error) {
         next(error); 
-    }
-}
+    };
+};
 
 // PATCH /api/notes/:id
 exports.patchNoteById = async (req, res, next) => {
@@ -77,13 +78,13 @@ exports.patchNoteById = async (req, res, next) => {
         );
         if (updatedNote.isEmpty()) {
             return res.status(200).json({ message: "Deleting empty note." });
-        }
+        };
 
         return res.status(200).json({ updatedNote, message: "Note updated successfully." });
     } catch(error) {
         next(error);
-    }
-}
+    };
+};
 
 // DELETE /api/notes/:id
 exports.deleteNoteById = async (req, res, next) => {
@@ -93,10 +94,10 @@ exports.deleteNoteById = async (req, res, next) => {
 
         if (!deletedNote) {
             return res.status(404).json({ message: "Note not found." });
-        }
+        };
 
         res.json({ message: "Account deleted successfully." });
     } catch(error) {
         next(error);
-    }
-}
+    };
+};

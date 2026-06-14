@@ -1,14 +1,14 @@
 // ============================= 
-// controllers/user.js
+// controllers/api/userController.js
 // ============================= 
 // Handles user route endpoints
+// API - return with .json(), errors passed to error handler 
 
 // ============================= 
 // IMPORTS
 // ============================= 
 
-const mongoose = require("mongoose"); 
-const User = require("../models/User.js");
+const User = require("../../models/User.js");
 
 // ============================= 
 // CONTROLLERS
@@ -22,18 +22,13 @@ exports.patchAccountDetails = async (req, res, next) => {
 
         if (req.body.username) user.username = req.body.username;
         if (req.body.password) user.password = req.body.password;
-        if (req.body.preferences) {
-            for (const setting of Object.keys(req.body.preferences)) {
-                user.preferences[setting] = req.body.preferences[setting];
-            }
-        }
         user.save();
 
         res.status(200).json({ user, message: "User updated successfully." });
     } catch(error) {
         next(error);
-    }
-}
+    };
+};
 
 // DELETE /api/users
 exports.deleteAccount = async (req, res, next) => {
@@ -48,5 +43,5 @@ exports.deleteAccount = async (req, res, next) => {
         res.status(200).json({ message: "Account deleted successfully." })
     } catch(error) {
         next(error);
-    }
-}
+    };
+};
