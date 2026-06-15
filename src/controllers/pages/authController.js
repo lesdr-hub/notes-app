@@ -16,7 +16,7 @@ const passport = require("passport");
 // ============================= 
 
 // GET /auth/register 
-exports.renderRegisterPage = (req, res) => {
+exports.getRegister = (req, res) => {
     res.render("pages/register", {
         title: "Register - notes",
         error: req.flash("error")[0],
@@ -32,7 +32,7 @@ exports.postRegister = async (req, res) => {
             req.flash("error", "Email and password required.");
             return res.redirect("/auth/register");
         }
-        if (password.length > 8) {
+        if (password.length < 8) {
             req.flash("error", "Password must be at least 8 characters.");
             return res.redirect("/auth/register");
         }
@@ -58,7 +58,7 @@ exports.postRegister = async (req, res) => {
 }
 
 // GET /auth/login
-exports.renderLoginPage = (req, res) => {
+exports.getLogin = (req, res) => {
     res.render("pages/login", {
         title: "Log In - notes",
         error: req.flash("error")[0],
@@ -71,7 +71,7 @@ exports.postLogin = async (req, res, next) => {
     try {
         await passport.authenticate("local", (error, user, info) => {
             if (!user) {
-                req.flash("error", error.message);
+                req.flash("error", info);
                 return res.redirect("/auth/login");
             }
 
@@ -81,7 +81,7 @@ exports.postLogin = async (req, res, next) => {
                 delete req.session.returnTo;
                 res.redirect(returnTo);
             });
-        });
+        })(req, res, next);
     } catch (error) {
         next(error);
     }
