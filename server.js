@@ -41,19 +41,19 @@ app.use(session({
                       || "super-secret-dev-secret",
     resave:           false,
     saveUninitialized: false,
-    store: Mongostore.create({
+    store: MongoStore.create({
         mongoUrl: process.env.MONGODB_URI,
     }),
     cookie: {
         maxAge:   1000 * 60 * 60 * 24 * 14, // save cookie for 2 weeks in ms
-        secure:   process.env.NODE_ENV = "production",
+        secure:   process.env.NODE_ENV === "production",
         httpOnly: true, 
         sameSite: "lax"
     },
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash);
+app.use(flash());
 app.use(locals); // locals for all views
 
 // =============================
@@ -61,7 +61,7 @@ app.use(locals); // locals for all views
 // =============================
 // PATHS
 const authRoutes     = require("./src/routes/auth.js");
-const dashRoutes     = require("./src/routes/dash.js");
+const dashRoutes     = require("./src/routes/dashboard.js");
 const apiRoutes      = require("./src/routes/api.js");
 const { ensureAuth } = require("./src/middleware/auth.js");
 const errorHandlers  = require("./src/middleware/errorHandlers.js");
@@ -74,8 +74,8 @@ app.get("/", ensureAuth, (req, res) => {
 app.use("/dashboard", dashRoutes);
 app.use("/auth",      authRoutes);
 app.use("/api",       apiRoutes);
-app.use(error.notFound);
-app.use(error.global);
+app.use(errorHandlers.notFound);
+app.use(errorHandlers.global);
 
 // =============================
 // TESTING
