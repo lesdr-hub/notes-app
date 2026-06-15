@@ -10,6 +10,7 @@ const locals         = require("./src/middleware/locals.js");
 const { MongoStore } = require("connect-mongo");
 const passport       = require("passport"); 
 const connectDb      = require("./config/db.js");
+const methodOverride = require("method-override");
 
 // =============================
 // SETUP
