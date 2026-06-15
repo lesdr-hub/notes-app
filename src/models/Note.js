@@ -25,6 +25,7 @@ const noteSchema = new mongoose.Schema(
         default: ""
     },
     color: {
+        type: String,
         required: true, 
         default: "default",
         enum: ["default", "red", "orange", 
@@ -38,5 +39,5 @@ noteSchema.methods.isEmpty = function() {
   return !this.title.trim() && !this.content.trim();
 };
 
-const Note = mongoose.model(noteSchema);
+const Note = mongoose.model("Note", noteSchema);
 module.exports = Note;
