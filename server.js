@@ -31,7 +31,7 @@ app.use(express.static(loc("public")));
 
 // PARSING REQ
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true })); // I don't think we use this lol but better safe than sorry
 app.use(methodOverride("_method"));
 
 // SESSION CONFIG

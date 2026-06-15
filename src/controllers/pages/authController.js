@@ -16,8 +16,8 @@ const passport = require("passport");
 // ============================= 
 
 // GET /auth/register 
-exports.renderRegisterPage = (req, res, next) => {
-    res.render("register", {
+exports.renderRegisterPage = (req, res) => {
+    res.render("pages/register", {
         title: "Register - notes",
         error: req.flash("error")[0],
         success: req.flash("success")[0]
@@ -25,7 +25,7 @@ exports.renderRegisterPage = (req, res, next) => {
 }
 
 // POST /auth/register
-exports.postRegister = (req, res, next) => {
+exports.postRegister = async (req, res) => {
     try {
         const { username, password, confirmPassword } = req.body;
         if (!username || !password) {
@@ -40,7 +40,7 @@ exports.postRegister = (req, res, next) => {
             req.flash("error", "Passwords do not match.");
             return res.redirect("/auth/register");    
         }
-        const user = User.create({ username, password });
+        const user = await User.create({ username, password });
 
         req.logIn(user, (error) => {
             if (error) return res.redirect("/auth/login");
@@ -58,8 +58,8 @@ exports.postRegister = (req, res, next) => {
 }
 
 // GET /auth/login
-exports.renderLoginPage = (req, res, next) => {
-    res.render("login", {
+exports.renderLoginPage = (req, res) => {
+    res.render("pages/login", {
         title: "Log In - notes",
         error: req.flash("error")[0],
         success: req.flash("success")[0]
@@ -67,15 +67,16 @@ exports.renderLoginPage = (req, res, next) => {
 }
 
 // POST /auth/login
-exports.postLogin =(req, res, next) => {
+exports.postLogin = async (req, res, next) => {
     try {
-        passport.authenticate("local", (error, user, info) => {
+        await passport.authenticate("local", (error, user, info) => {
             if (!user) {
                 req.flash("error", error.message);
                 return res.redirect("/auth/login");
             }
 
             req.logIn(user, (error) => {
+                if (error) return res.redirect("/auth/login");
                 const returnTo = req.session.returnTo || "/dashboard";
                 delete req.session.returnTo;
                 res.redirect(returnTo);
