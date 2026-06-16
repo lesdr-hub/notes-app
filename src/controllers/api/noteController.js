@@ -24,7 +24,7 @@ exports.getAllNotes = async (req, res, next) => {
         const pinnedNotes = notes.filter(n => n.pinned);
         const unpinnedNotes = notes.filter(n => !n.pinned);
 
-        res.status(200).json({ pinntedNotes, unpinnedNotes, message: "Notes retrieved successfully." });
+        res.status(200).json({ pinnedNotes, unpinnedNotes, message: "Notes retrieved successfully." });
     } catch(error) {
         next(error);
     };
@@ -34,14 +34,14 @@ exports.getAllNotes = async (req, res, next) => {
 exports.getNoteById = async (req, res, next) => {
     try {
         const userId = req.user._id;
-        const note = Note.findById({ userId });
+        const note = await Note.findOne({ _id: req.params.id, userId });
 
         if (!note) {
             return res.status(404).json({ message: "Note not found."});
         }
 
         res.status(200).json({ note, message: "Note retrieved successfully" });
-    } catch {
+    } catch(error) {
         next(error); 
     };
 };
@@ -60,7 +60,7 @@ exports.postNote = async (req, res, next) => {
         if (note.isEmpty()) {
             return res.status(200).json({ message: "Deleting empty note." });
         }
-        note.save();
+        await note.save();
         
         res.json({ note, message: "Successfully created note."});
     } catch(error) {
@@ -71,7 +71,7 @@ exports.postNote = async (req, res, next) => {
 // PATCH /api/notes/:id
 exports.patchNoteById = async (req, res, next) => {
     try {
-        const updatedNote = Note.updateById(
+        const updatedNote = await Note.findOneAndUpdate(
             { _id: req.params.id, userId: req.user._id },
             { $set: req.body },
             { new: true, runValidators: true }
@@ -90,13 +90,13 @@ exports.patchNoteById = async (req, res, next) => {
 exports.deleteNoteById = async (req, res, next) => {
     try {
         const userId = req.user._id;
-        const deletedNote = Note.findOneAndDelete({ _id: req.params.id, userId });
+        const deletedNote = await Note.findOneAndDelete({ _id: req.params.id, userId });
 
         if (!deletedNote) {
             return res.status(404).json({ message: "Note not found." });
         };
 
-        res.json({ message: "Account deleted successfully." });
+        res.json({ message: "Note deleted successfully." });
     } catch(error) {
         next(error);
     };

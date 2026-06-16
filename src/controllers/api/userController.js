@@ -18,7 +18,7 @@ const User = require("../../models/User.js");
 exports.patchAccountDetails = async (req, res, next) => {
     try {        
         const userId = req.user._id;
-        const user = User.findById(userId);
+        const user = await User.findById(userId);
 
         if (req.body.username) user.username = req.body.username;
         if (req.body.password) user.password = req.body.password;
@@ -34,7 +34,7 @@ exports.patchAccountDetails = async (req, res, next) => {
 exports.deleteAccount = async (req, res, next) => {
     try {
         const userId = req.user._id;
-        const deletedUser = User.findByIdAndDelete(userId);
+        const deletedUser = await User.findByIdAndDelete(userId);
     
         if (!deletedUser) {
             return res.status(404).json({ message: "User not found."});

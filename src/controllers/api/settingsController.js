@@ -15,10 +15,10 @@ const User = require("../../models/User.js");
 // ============================= 
 
 // PATCH api/settings
-exports.patchSettings = (req, res, next) => {
+exports.patchSettings = async (req, res, next) => {
     try {
         const userId = req.user._id;
-        const user = User.findById(userId);
+        const user = await User.findById(userId);
         
         if (req.body.preferences) {
             for (const setting of Object.keys(req.body.preferences)) {
