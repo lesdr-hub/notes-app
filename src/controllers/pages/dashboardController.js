@@ -8,7 +8,6 @@
 // IMPORTS
 // ============================= 
 
-const User = require("../../models/User.js");
 const Note = require("../../models/Note.js");
 
 // ============================= 
@@ -19,7 +18,6 @@ const Note = require("../../models/Note.js");
 exports.getDashboard = async (req, res) => {
     try {
         const userId = req.user._id;
-        const user = await User.findById(userId);
         const notes = await Note.find({ userId })
             .sort({ pinned: -1, updatedAt: -1 });
 

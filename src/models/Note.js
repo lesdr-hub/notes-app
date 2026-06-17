@@ -24,6 +24,10 @@ const noteSchema = new mongoose.Schema(
         type: String, 
         default: ""
     },
+    pinned: {
+        type: Boolean, 
+        default: false
+    },
     color: {
         type: String,
         required: true, 

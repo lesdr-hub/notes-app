@@ -71,19 +71,21 @@ exports.postNote = async (req, res, next) => {
 // PATCH /api/notes/:id
 exports.patchNoteById = async (req, res, next) => {
     try {
+        const { title, content, color, pinned } = req.body;
         const updatedNote = await Note.findOneAndUpdate(
             { _id: req.params.id, userId: req.user._id },
-            { $set: req.body },
+            { $set: { title, content, color, pinned } },
             { new: true, runValidators: true }
         );
         if (!updatedNote) {
             return res.status(404).json({ message: "Note not found." });
         };
         if (updatedNote.isEmpty()) {
+            await Note.findByIdAndDelete(updatedNote._id);
             return res.status(200).json({ message: "Deleting empty note." });
         };
 
-        return res.status(200).json({ updatedNote, message: "Note updated successfully." });
+        return res.status(201).json({ updatedNote, message: "Note updated successfully." });
     } catch(error) {
         next(error);
     };
@@ -94,7 +96,7 @@ exports.deleteNoteById = async (req, res, next) => {
     try {
         const userId = req.user._id;
         const deletedNote = await Note.findOneAndDelete({ _id: req.params.id, userId });
-
+        
         if (!deletedNote) {
             return res.status(404).json({ message: "Note not found." });
         };
