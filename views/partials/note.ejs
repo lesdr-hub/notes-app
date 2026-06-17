@@ -1,0 +1,17 @@
+
+
+<div class="note-card" style="background-color: <%= color %>">
+    <% if (pinned) { %>
+        <span class="material-icons pin-icon"></span>
+    <% } else {
+        <span class="material-icons unpinned-icon"></span>
+    <% } %>
+
+    <div class="note-title"><%= title %></div>
+    <div class="note-content"><%= content %></div>
+
+    <div class="card-actions">
+        <button class="icon-btn"><span class="material-icons">color_lens</span></button>
+        <button class="icon-btn"><span class="material-icons">trash</span></button>
+    </div>
+</div>

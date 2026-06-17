@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[ noted ]</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="../../public/css/styles.css">
+</head>
+<body>
+
+
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="topbar-left">
+    <div class="logo">[ noted ]</div>
+  </div>
+
+  <div class="topbar-right">
+    <button class="icon-btn" title="Refresh"><span class="material-icons">refresh</span></button>
+    <button class="icon-btn" title="Settings"><span class="material-icons">settings</span></button>
+    <button class="avatar" title="User"></button>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- NEW NOTE BAR -->
+  <div class="new-note-bar">
+    <div class="new-note-input">
+      <input class="create-note">
+      <span class="material-icons">check_box</span>
+      <span class="material-icons">brush</span>
+      <span class="material-icons">image</span>
+    </div>
+  </div>
+
+  <!-- PINNED NOTES -->
+  <div class="pinned-section">
+    <div class="section-label">Pinned</div>
+    <div class="notes-grid">
+
+        <% if (pinnedNotes.length > 0) { %>
+          <% pinnedNotes.forEach(note => { %>
+            <%- include("partials/note", {
+              title: note.title,
+              content: note.content,
+              pinned: note.pinned,
+              color: note.color
+            }); %>
+          <% }); %>
+        <% } else { %>
+          <div>No pinned notes.</div>
+        <% } %>
+
+    </div>
+  </div>
+
+  <!-- OTHER NOTES -->
+  <div class="others-section">
+    <div class="section-label">Others</div>
+    <div class="notes-grid">
+
+      <% if (unpinnedNotes.length > 0) { %>
+        <% unpinnedNotes.forEach(note => { %>
+          <%- include("partials/note", {
+            title: note.title,
+            content: note.content,
+            pinned: note.pinned,
+            color: note.color
+          }); %>
+        <% }); %>
+      <% } else { %>
+        <div>No notes yet!</div>
+      <% } %>
+
+    </div>
+  </div>
+</main>
+
+</body>
+</html>
