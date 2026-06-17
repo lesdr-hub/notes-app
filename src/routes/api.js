@@ -28,9 +28,9 @@ router.post("/notes", noteController.postNote);
 router.patch("/notes/:id", noteController.patchNoteById);
 router.delete("/notes/:id", noteController.deleteNoteById);
 
-// User + settings
-router.patch("/api/users", userController.patchAccountDetails);
-router.delete("/api/users", userController.deleteAccount);
-router.patch("/api/settings", settingsController.patchSettings);
+// User + settings (/api)
+router.patch("/users", userController.patchAccountDetails);
+router.delete("/users", userController.deleteAccount);
+router.patch("/settings", settingsController.patchSettings);
 
 module.exports = router;

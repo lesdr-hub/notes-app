@@ -76,6 +76,9 @@ exports.patchNoteById = async (req, res, next) => {
             { $set: req.body },
             { new: true, runValidators: true }
         );
+        if (!updatedNote) {
+            return res.status(404).json({ message: "Note not found." });
+        };
         if (updatedNote.isEmpty()) {
             return res.status(200).json({ message: "Deleting empty note." });
         };
