@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[ noted ] - Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<main class="auth-page">
+
+  <div class="auth-card">
+
+    <div class="auth-header">
+      <div class="logo">[ noted ]</div>
+      <div class="auth-title">Log in</div>
+    </div>
+
+    <form class="auth-form" method="POST" action="/auth/login">
+      <input
+        class="auth-input"
+        type="email"
+        name="username"
+        placeholder="Email"
+        required
+        autocomplete="email"
+      >
+      <input
+        class="auth-input"
+        type="password"
+        name="password"
+        placeholder="Password"
+        required
+        autocomplete="current-password"
+      >
+      <button class="text-btn auth-submit" type="submit">Log in with Email</button>
+    </form>
+
+    <div class="auth-footer">
+      <span>Don't have an account?</span>
+      <a href="/auth/register">Register</a>
+    </div>
+
+  </div>
+
+</main>
+
+</body>
+</html>

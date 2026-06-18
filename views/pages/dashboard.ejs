@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[ noted ] - Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- OVERLAY (shared by settings and note editor) -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- SETTINGS PANEL -->
+  <%- include("partials/settings") %>
+
+  <!-- ACTIVE NOTE PANEL -->
+  <%- include("partials/active-note") %>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="logo">[ noted ]</div>
+    </div>
+    <div class="topbar-right">
+      <button class="icon-btn" id="refresh-btn" title="Refresh">
+        <span class="material-icons">refresh</span>
+      </button>
+      <button class="icon-btn" id="settings-btn" title="Settings">
+        <span class="material-icons">settings</span>
+      </button>
+      <div class="avatar" title="Account">
+        <%= user && user.username ? user.username[0].toUpperCase() : "?" %>
+      </div>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <a class="nav-item active" href="/dashboard">
+      <span>Notes</span>
+    </a>
+    <div class="nav-divider"></div>
+    <form action="/auth/logout" method="POST" class="logout-form">
+      <button type="submit" class="nav-item nav-item--btn">
+        <span class="material-icons">logout</span>
+        <span>Log out</span>
+      </button>
+    </form>
+    
+    <!-- TO BE ADDED -->
+    <!-- <a class="nav-item" href="#">
+      <span class="material-icons">archive</span>
+      <span>Archive</span>
+    </a>
+    <a class="nav-item" href="#">
+      <span class="material-icons">delete</span>
+      <span>Trash</span>
+    </a>  -->
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- NEW NOTE BAR -->
+    <div class="new-note-bar">
+      <div class="new-note-input" id="new-note-trigger">
+        <span class="new-note-placeholder">Take a note…</span>
+        <div class="new-note-actions">
+      </div>
+    </div>
+
+    <!-- PINNED NOTES -->
+    <% if (pinnedNotes.length > 0) { %>
+    <section class="pinned-section">
+      <div class="section-label">Pinned</div>
+      <div class="notes-grid">
+        <% pinnedNotes.forEach(note => { %>
+          <%- include("partials/note", {
+            id: note._id,
+            title: note.title,
+            content: note.content,
+            pinned: note.pinned,
+            color: note.color
+          }); %>
+        <% }); %>
+      </div>
+    </section>
+    <% } %>
+
+    <!-- OTHER NOTES -->
+    <section class="others-section">
+      <% if (pinnedNotes.length > 0) { %>
+        <div class="section-label">Others</div>
+      <% } %>
+      <div class="notes-grid">
+        <% if (unpinnedNotes.length > 0) { %>
+          <% unpinnedNotes.forEach(note => { %>
+            <%- include("partials/note", {
+              id: note._id,
+              title: note.title,
+              content: note.content,
+              pinned: note.pinned,
+              color: note.color
+            }); %>
+          <% }); %>
+        <% } else { %>
+          <div class="empty-state">
+            <span class="material-icons empty-icon">edit_note</span>
+            <p>No notes yet.</p>
+          </div>
+        <% } %>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>

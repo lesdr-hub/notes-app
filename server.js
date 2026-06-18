@@ -28,7 +28,7 @@ function loc(...directories) {
 // VIEW ENGINE + STATIC
 app.set("view engine", "ejs");
 app.set("views", loc("views"));
-app.use(express.static(loc("public")));
+app.use(express.static("public"));
 
 // PARSING REQ
 app.use(express.json());
@@ -71,6 +71,12 @@ const errorHandlers  = require("./src/middleware/errorHandlers.js");
 app.get("/", ensureAuth, (req, res) => {
     res.redirect("/dashboard");
 });
+
+// app.get("/", (req, res) => {
+//     console.log("ROOT HIT")
+//     res.send("OK");
+// });
+
 app.use("/dashboard", dashRoutes);
 app.use("/auth",      authRoutes);
 app.use("/api",       apiRoutes);
@@ -82,11 +88,9 @@ app.use(errorHandlers.global);
 // =============================
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+app.listen(3000, () => {
     console.log(`
         =======================================\n
         notes server running on port ${PORT}\n
         =======================================\n`)
 });
-
-module.exports = app;

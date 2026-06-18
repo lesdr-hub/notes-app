@@ -1,17 +1,27 @@
+<div class="note-card <%= color %> <%= pinned ? 'pinned' : '' %>"
+     data-id="<%= id %>"
+     data-title="<%= title %>"
+     data-content="<%= content %>"
+     data-color="<%= color %>"
+     data-pinned="<%= pinned %>">
 
+  <span class="material-icons pin-icon" title="Pinned">push_pin</span>
 
-<div class="note-card" style="background-color: <%= color %>">
-    <% if (pinned) { %>
-        <span class="material-icons pin-icon"></span>
-    <% } else {
-        <span class="material-icons unpinned-icon"></span>
-    <% } %>
-
+  <% if (title) { %>
     <div class="note-title"><%= title %></div>
-    <div class="note-content"><%= content %></div>
+  <% } %>
 
-    <div class="card-actions">
-        <button class="icon-btn"><span class="material-icons">color_lens</span></button>
-        <button class="icon-btn"><span class="material-icons">trash</span></button>
-    </div>
+  <div class="note-content"><%= content %></div>
+
+  <div class="card-actions">
+    <button class="icon-btn card-action-btn" data-action="pin" title="<%= pinned ? 'Unpin' : 'Pin' %>">
+      <span class="material-icons">push_pin</span>
+    </button>
+    <button class="icon-btn card-action-btn" data-action="color" title="Change color">
+      <span class="material-icons">color_lens</span>
+    </button>
+    <button class="icon-btn card-action-btn" data-action="delete" title="Delete note">
+      <span class="material-icons">delete</span>
+    </button>
+  </div>
 </div>

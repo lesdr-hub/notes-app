@@ -1,35 +1,43 @@
+<div class="note-editor" id="active-note-panel">
 
+  <!-- Header: title + pin -->
+  <div class="note-header">
+    <input
+      type="text"
+      id="editor-title"
+      class="note-title-input"
+      placeholder="Title"
+      autocomplete="off"
+    >
+    <button type="button" class="icon-btn pin-btn" id="editor-pin-btn" title="Pin note">
+      <span class="material-icons">push_pin</span>
+    </button>
+  </div>
 
-<div class="note-editor">
+  <!-- Content area -->
+  <textarea
+    id="editor-content"
+    class="note-content-input"
+    placeholder="Take a note…"
+    rows="8"
+  ></textarea>
 
-    <!-- Header -->
-    <div class="note-header">
-        <input type="text" name="title" class="note-title" placeholder="Title">
-        <button type="button" class="pin-btn" title="Pin note">
-            Pin <!-- replace with image later -->
-        </button>
+  <!-- Footer: color picker + actions -->
+  <div class="note-footer">
+    <select id="editor-color" class="color-picker" title="Note color">
+      <option value="default">Default</option>
+      <option value="red">Red</option>
+      <option value="orange">Orange</option>
+      <option value="yellow">Yellow</option>
+      <option value="green">Green</option>
+      <option value="blue">Blue</option>
+      <option value="purple">Purple</option>
+    </select>
+
+    <div class="note-footer-actions">
+      <button class="text-btn secondary" id="editor-close-btn">Close</button>
+      <button class="text-btn" id="editor-save-btn">Save</button>
     </div>
+  </div>
 
-    <!-- Content -->
-    <textarea
-        name="content"
-        class="note-content"
-        placeholder="Take a note..."
-        rows="10"
-    ></textarea>
-
-    <!-- Bottom buttons -->
-    <div class="Note options">
-        <select name="color" class="color-picker" title="Note color">
-            <option value="default">Default</option>
-            <option value="yellow">Yellow</option>
-            <option value="blue">Blue</option>
-            <option value="green">Green</option>
-            <option value="red">Red</option>
-        </select>
-
-        <button class="options">Options</button>
-
-        <button>Close</button>
-    </div>
 </div>
