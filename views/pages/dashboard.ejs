@@ -16,10 +16,10 @@
   <div class="overlay" id="overlay"></div>
 
   <!-- SETTINGS PANEL -->
-  <%- include("partials/settings") %>
+  <%- include("../partials/settings") %>
 
   <!-- ACTIVE NOTE PANEL -->
-  <%- include("partials/active-note") %>
+  <%- include("../partials/active-note") %>
 
   <!-- TOP BAR -->
   <header class="topbar">
@@ -46,7 +46,7 @@
     </a>
     <div class="nav-divider"></div>
     <form action="/auth/logout" method="POST" class="logout-form">
-      <button type="submit" class="nav-item nav-item--btn">
+      <button id="logout" class="nav-item nav-item--btn">
         <span class="material-icons">logout</span>
         <span>Log out</span>
       </button>
@@ -74,49 +74,11 @@
       </div>
     </div>
 
-    <!-- PINNED NOTES -->
-    <% if (pinnedNotes.length > 0) { %>
-    <section class="pinned-section">
-      <div class="section-label">Pinned</div>
-      <div class="notes-grid">
-        <% pinnedNotes.forEach(note => { %>
-          <%- include("partials/note", {
-            id: note._id,
-            title: note.title,
-            content: note.content,
-            pinned: note.pinned,
-            color: note.color
-          }); %>
-        <% }); %>
-      </div>
-    </section>
-    <% } %>
-
-    <!-- OTHER NOTES -->
-    <section class="others-section">
-      <% if (pinnedNotes.length > 0) { %>
-        <div class="section-label">Others</div>
-      <% } %>
-      <div class="notes-grid">
-        <% if (unpinnedNotes.length > 0) { %>
-          <% unpinnedNotes.forEach(note => { %>
-            <%- include("partials/note", {
-              id: note._id,
-              title: note.title,
-              content: note.content,
-              pinned: note.pinned,
-              color: note.color
-            }); %>
-          <% }); %>
-        <% } else { %>
-          <div class="empty-state">
-            <span class="material-icons empty-icon">edit_note</span>
-            <p>No notes yet.</p>
-          </div>
-        <% } %>
-      </div>
-    </section>
-
+    <!-- NOTE GRID -->
+    <div id="note-container">
+      <%- include("../partials/note-list", { unpinnedNotes, pinnedNotes }) %>
+    </div>
+    
   </main>
 
   <script src="/js/script.js"></script>

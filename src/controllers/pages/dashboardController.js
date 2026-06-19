@@ -14,24 +14,49 @@ const Note = require("../../models/Note.js");
 // CONTROLLERS
 // ============================= 
 
-// /GET dashboard
+// helper
+const getUserNotes = async (userId) => {
+    const notes = await Note.find({ userId })
+        .sort({ pinned: -1, updatedAt: -1 });
+
+    return {
+        pinnedNotes: notes.filter(n => n.pinned),
+        unpinnedNotes: notes.filter(n => !n.pinned)
+    };
+};
+
+
+// GET /dashboard
 exports.getDashboard = async (req, res) => {
     try {
-        const userId = req.user._id;
         const { _id, username } = req.user;
-        const notes = await Note.find({ userId })
-            .sort({ pinned: -1, updatedAt: -1 });
+        const { pinnedNotes, unpinnedNotes } = await getUserNotes(_id);
 
-        const pinnedNotes = notes.filter(n => n.pinned);
-        const unpinnedNotes = notes.filter(n => !n.pinned);
-
-        res.render("dashboard", {
+        res.render("pages/dashboard", {
             title: "Dashboard - notes",
             user: { _id, username },
-            pinnedNotes, 
-            unpinnedNotes
+            pinnedNotes,
+            unpinnedNotes,
+            error: req.flash("error")[0],
+            success: req.flash("success")[0]
         });
     } catch (error) {
         res.status(500).render("error", { message: "Failed to load dashboard." });
     }
-}
+};
+
+// GET /dashboard/notes
+exports.renderNotePartials = async (req, res) => {
+    try {
+        const { pinnedNotes, unpinnedNotes } = await getUserNotes(req.user._id);
+
+        res.render("partials/note-list", {
+            pinnedNotes,
+            unpinnedNotes,
+            error: req.flash("error")[0],
+            success: req.flash("success")[0]
+        });
+    } catch (error) {
+        res.status(500).render("error", { message: "Failed to load notes." });
+    }
+};

@@ -60,6 +60,17 @@
 
   </div>
 
+  <% if (success && success.length > 0) { %>
+    <div class="auth-error">
+      <%= success %>
+    </div>
+  <% } %>
+  <% if (error && error.length > 0) { %>
+    <div class="auth-error">
+      <%= error %>
+    </div>
+  <% } %>
+
 </main>
 
 </body>

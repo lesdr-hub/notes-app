@@ -16,10 +16,10 @@ const { ensureGuest, ensureAuth } = require("../middleware/auth"); // login/regi
 // ROUTES
 // ============================
 
-router.get("/login", ensureGuest,     authController.getLogin);
-router.get("/register", ensureGuest,  authController.getRegister);
-router.post("/login", ensureGuest,    authController.postLogin);
+router.get("/login",     ensureGuest, authController.getLogin);
+router.get("/register",  ensureGuest, authController.getRegister);
+router.post("/login",    ensureGuest, authController.postLogin);
 router.post("/register", ensureGuest, authController.postRegister);
-router.get("/logout", ensureAuth,     authController.logout);
+router.post("/logout",   ensureAuth,  authController.logout);
 
 module.exports = router;

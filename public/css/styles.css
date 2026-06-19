@@ -91,6 +91,7 @@ input, textarea, select { font-family: inherit; color: var(--text); }
 
 .topbar-right {
   margin-left: auto;
+  margin-right: 16px;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -106,6 +107,7 @@ input, textarea, select { font-family: inherit; color: var(--text); }
 }
 
 .avatar {
+  margin-left: 12px;
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -243,6 +245,7 @@ input, textarea, select { font-family: inherit; color: var(--text); }
   letter-spacing: .8px;
   color: var(--text-muted);
   text-transform: uppercase;
+  margin-top: 16px;
   margin-bottom: 16px;
   padding-left: 4px;
 }
@@ -276,7 +279,7 @@ input, textarea, select { font-family: inherit; color: var(--text); }
   position: relative;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-top: 2px solid var(--border);
+  border-top: 4px solid var(--border);
   border-radius: var(--radius);
   transition: box-shadow .15s, background-color .15s;
 }

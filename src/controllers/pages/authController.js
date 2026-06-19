@@ -28,6 +28,7 @@ exports.getRegister = (req, res) => {
 exports.postRegister = async (req, res) => {
     try {
         const { username, password, confirmPassword } = req.body;
+
         if (!username || !password) {
             req.flash("error", "Email and password required.");
             return res.redirect("/auth/register");
@@ -51,7 +52,7 @@ exports.postRegister = async (req, res) => {
         if (error.code === 11000) {
             req.flash("error", "Email already exists.");
         } else {
-            req.flash("error", "Something went wrong.");
+            req.flash("error", `${error.message}.`);
         }
         return res.redirect("/auth/register");
     }
@@ -69,6 +70,7 @@ exports.getLogin = (req, res) => {
 // POST /auth/login
 exports.postLogin = async (req, res, next) => {
     try {
+
         await passport.authenticate("local", (error, user, info) => {
             if (!user) {
                 req.flash("error", info);
@@ -83,14 +85,19 @@ exports.postLogin = async (req, res, next) => {
             });
         })(req, res, next);
     } catch (error) {
+        console.log("error");
         next(error);
     }
 }
 
-// GET /auth/logout
+// POST /auth/logout
 exports.logout = (req, res, next) => {
   req.logout((error) => {
     if (error) return next(error);
-    res.redirect("/auth/login");
+    req.session.destroy((error) => {
+        if (error) return next(error);
+        console.log("Logging out...");
+        res.redirect("/auth/login");
+    });
   });
 };

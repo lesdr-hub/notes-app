@@ -17,7 +17,8 @@ const { ensureAuth }      = require("../middleware/auth.js");
 // ============================
 
 router.use(ensureAuth);
-// GET /dashboard
+
 router.get("/", dashboardController.getDashboard);
+router.get("/partials/note-list", dashboardController.renderNotePartials);
 
 module.exports = router;

@@ -1,0 +1,42 @@
+<!-- PINNED NOTES -->
+<% if (pinnedNotes.length > 0) { %>
+    <section class="pinned-section">
+        <div class="section-label">Pinned</div>
+        <div class="notes-grid">
+        <% pinnedNotes.forEach(note => { %>
+            <%- include("note", {
+            id: note._id,
+            title: note.title,
+            content: note.content,
+            pinned: note.pinned,
+            color: note.color
+            }); %>
+        <% }); %>
+        </div>
+    </section>
+<% } %>
+
+<!-- UNPINNED NOTES -->
+<section class="others-section">
+    <% if (pinnedNotes.length > 0) { %>
+        <div class="section-label">Others</div>
+    <% } %>
+    <div class="notes-grid">
+        <% if (unpinnedNotes.length > 0) { %>
+            <% unpinnedNotes.forEach(note => { %>
+            <%- include("note", {
+                id: note._id,
+                title: note.title,
+                content: note.content,
+                pinned: note.pinned,
+                color: note.color
+            }); %>
+            <% }); %>
+        <% } else { %>
+            <div class="empty-state">
+            <span class="material-icons empty-icon">edit_note</span>
+            <p>No notes yet.</p>
+            </div>
+        <% } %>
+    </div>
+</section>

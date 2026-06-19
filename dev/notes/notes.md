@@ -12,7 +12,6 @@ Using **MERN** for primary tech stack due to the fact that it perfectly fits the
     - **Sessions:** express-session, stored in db with connect-mongo
     - **Authentication:** passport (passport-local)
     - **Security:** bcrypt for password hashing
-- **Testing:** Mocha + Chai
 
 ## Models
 Only two primary models will be used for MVP:
@@ -140,9 +139,6 @@ Updates user preferences.
     - **requires:** user object
 
 > Note: The API route is minimalistic with only note and basic settings functionalities for now, in the MVP phase - later functionality with tasks and subjects will be provided later
-
-## Testing
-Unit tests for models, integration tests for API routes
 
 // =============================
 save this for dividers
