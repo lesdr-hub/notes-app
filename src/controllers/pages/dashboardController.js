@@ -33,7 +33,6 @@ exports.getDashboard = async (req, res) => {
         const { pinnedNotes, unpinnedNotes } = await getUserNotes(_id);
 
         res.render("pages/dashboard", {
-            title: "Dashboard - notes",
             user: { _id, username, preferences },
             pinnedNotes,
             unpinnedNotes,

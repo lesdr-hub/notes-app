@@ -18,7 +18,6 @@ const passport = require("passport");
 // GET /auth/register 
 exports.getRegister = (req, res) => {
     res.render("pages/register", {
-        title: "Register - notes",
         error: req.flash("error")[0],
         success: req.flash("success")[0]
     });
@@ -61,7 +60,6 @@ exports.postRegister = async (req, res) => {
 // GET /auth/login
 exports.getLogin = (req, res) => {
     res.render("pages/login", {
-        title: "Log In - notes",
         error: req.flash("error")[0],
         success: req.flash("success")[0]
     });
