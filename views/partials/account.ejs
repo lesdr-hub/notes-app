@@ -1,0 +1,32 @@
+<div class="settings-panel" id="account-panel">
+
+  <header class="settings-header">
+    <span class="settings-title">Account</span>
+    <button class="icon-btn close-settings" id="close-account-btn" title="Close">
+      <span class="material-icons">close</span>
+    </button>
+  </header>
+
+  <hr class="settings-divider">
+
+  <div class="settings-section">
+    <span class="settings-section-label"><%= user && user.username ? user.username : "" %></span>
+    <button class="text-btn secondary" id="account-logout-btn">Log out</button>
+  </div>
+
+  <hr class="settings-divider">
+
+  <div class="settings-section">
+    <span class="settings-section-label">Delete account</span>
+    <button class="text-btn danger" id="account-delete-btn">Delete</button>
+  </div>
+
+  <span class="settings-error" id="account-error"></span>
+
+  <hr class="settings-divider">
+
+  <div class="settings-footer">
+    <button class="text-btn" id="account-ok-btn">OK</button>
+  </div>
+
+</div>

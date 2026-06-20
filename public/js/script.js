@@ -14,6 +14,13 @@ const settingsBtn      = document.getElementById("settings-btn");
 const closeSettingsBtn = document.getElementById("close-settings-btn");
 const settingsOkBtn    = document.getElementById("settings-ok-btn");
 
+const accountPanel     = document.getElementById("account-panel");
+const accountBtn       = document.getElementById("account-btn");
+const closeAccountBtn  = document.getElementById("close-account-btn");
+const accountOkBtn     = document.getElementById("account-ok-btn");
+const accountLogoutBtn = document.getElementById("account-logout-btn");
+const accountDeleteBtn = document.getElementById("account-delete-btn");
+
 const newNoteTrigger   = document.getElementById("new-note-trigger");
 const noteContainer    = document.getElementById("note-container");
 
@@ -25,7 +32,6 @@ const editorSaveBtn    = document.getElementById("editor-save-btn");
 const editorCloseBtn   = document.getElementById("editor-close-btn");
 
 const themeButtons     = document.querySelectorAll("[data-theme-btn]");
-
 
 // =============================
 // STATE
@@ -46,10 +52,13 @@ function hideOverlay() { overlay.classList.remove("is-visible"); }
 async function loadNotes() {
   // RENDER NOTE LIST
   const res = await fetch("/dashboard/partials/note-list");
-  if (!res.ok) return console.error("Failed to load notes.");
-  
-  const notes = await res.text();
   const container = document.getElementById("note-container");
+  if (!res.ok) {
+    container.textContent = "Error retrieving notes.";
+    return console.error("Failed to load notes.");
+  }
+
+  const notes = await res.text();
   container.innerHTML = notes;
 }
 
@@ -77,16 +86,31 @@ settingsBtn.addEventListener("click", openSettings);
 closeSettingsBtn.addEventListener("click", closeSettings);
 settingsOkBtn.addEventListener("click", closeSettings);
 
-
 // =============================
 // THEME
 // =============================
-function setTheme(theme) {
+async function setTheme(theme) {
   document.documentElement.dataset.theme = theme;
   themeButtons.forEach(btn => {
     btn.classList.toggle("active", btn.dataset.themeBtn === theme);
   });
-  // currently does not persist
+  
+  const res = await fetch("/api/settings", {
+    method: "PATCH",
+    headers: {
+      "content-type": "application/json"
+    },
+    body: JSON.stringify({ preferences: { theme } })
+  });
+
+  if (!res.ok) {
+    console.error("Failed to save theme preferences.");
+
+    const msg = document.getElementById("settings-error");
+    msg.textContent = "Failed to save theme preferences.";
+    msg.classList.add("is-visible");
+    setTimeout(() => msg.classList.remove("is-visible"), 3000);
+  }
 }
 
 themeButtons.forEach(btn => {
@@ -100,6 +124,52 @@ themeButtons.forEach(btn => {
   });
 })();
 
+// =============================
+// ACCOUNT
+// =============================
+function openAccount() {
+  accountPanel.classList.add("is-open");
+  showOverlay();
+}
+ 
+function closeAccount() {
+  accountPanel.classList.remove("is-open");
+  hideOverlay();
+}
+ 
+accountBtn.addEventListener("click", openAccount);
+closeAccountBtn.addEventListener("click", closeAccount);
+accountOkBtn.addEventListener("click", closeAccount);
+ 
+// Logout (submits logout button)
+accountLogoutBtn.addEventListener("click", () => {
+  document.querySelector(".logout-form").submit();
+});
+ 
+// Delete account
+accountDeleteBtn.addEventListener("click", async () => {
+  const confirmed = window.confirm(
+    "Delete your account? This permanently deletes your notes and cannot be undone."
+  );
+  if (!confirmed) return;
+ 
+  const res = await fetch("/api/users", { 
+    method: "DELETE" 
+  });
+ 
+  if (!res.ok) {
+    console.error("Failed to delete account.");
+    
+    const msg = document.getElementById("account-error");
+    msg.textContent = message;
+    msg.classList.add("is-visible");
+    setTimeout(() => msg.classList.remove("is-visible"), 3000);
+    return;
+  }
+ 
+  // Server already destroyed the session — just send them to login
+  window.location.href = "/auth/login";
+});
 
 // =============================
 // NOTE EDITOR
@@ -151,20 +221,59 @@ newNoteTrigger.addEventListener("click", () => {
 });
 
 // Open editor populated with a note's data when a card is clicked
-noteContainer.addEventListener("click", e => {
+noteContainer.addEventListener("click", async e => {
+  // Check if action button is clicked
+  const actionBtn = e.target.closest(".card-action-btn");
   const card = e.target.closest(".note-card");
   if (!card) return;
+
+  if (actionBtn) {
+    e.stopPropagation();
+    const action = actionBtn.dataset.action;
+    const noteId = card.dataset.id;
+
+    if (action === "delete") {
+      const res = await fetch(`/api/notes/${noteId}`, { 
+        method: "DELETE" 
+      });
+      loadNotes();
+      return;
+    }
+
+    if (action === "pin") {
+      const currentlyPinned = card.dataset.pinned === "true";
+      const res = await fetch(`/api/notes/${noteId}`, {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ pinned: !currentlyPinned })
+      });
+      loadNotes();
+      return;
+    }
+
+    if (action === "color") {
+      // Replace with dedicated drop down later 
+      openNoteEditor({
+        id:      card.dataset.id,
+        title:   card.dataset.title,
+        content: card.dataset.content,
+        color:   card.dataset.color,
+        pinned:  card.dataset.pinned === "true",
+        isNew:   false,
+      });
+      return;
+    }
+
+    return; // Ensures editor does not open in the event nothing is triggered
+  }
   
-  card.addEventListener("click", e => {
-    if (e.target.closest(".card-actions")) return;   // handled separately
-    openNoteEditor({
-      id:      card.dataset.id,
-      title:   card.dataset.title,
-      content: card.dataset.content,
-      color:   card.dataset.color,
-      pinned:  card.dataset.pinned === "true",
-      isNew:   false,
-    });
+  openNoteEditor({
+    id:      card.dataset.id,
+    title:   card.dataset.title,
+    content: card.dataset.content,
+    color:   card.dataset.color,
+    pinned:  card.dataset.pinned === "true",
+    isNew:   false,
   });
 });
 
@@ -192,7 +301,6 @@ editorSaveBtn.addEventListener("click", async () => {
   };
 
   if (isNewNote) {
-    // TODO: POST /api/notes  →  body: payload  →  reload or inject card
     console.log("Fetching note...");
     const res = await fetch("/api/notes", {
       method: "POST",
@@ -218,60 +326,11 @@ editorSaveBtn.addEventListener("click", async () => {
   closeNoteEditor();
 });
 
-
-// =============================
-// CARD ACTION BUTTONS 
-// =============================
-noteContainer.addEventListener("click", e => {
-  const btn = e.target.closest(".card-action-btn");
-  btn.addEventListener("click", async e => {
-    e.stopPropagation();   // prevent card click opening editor
-
-    const action = btn.dataset.action;
-    const card   = btn.closest(".note-card");
-    const noteId = card.dataset.id;
-
-    if (action === "delete") {
-      const res = await fetch(`/api/notes/${noteId}`, {
-        method: "DELETE", 
-      });
-      loadNotes();
-      console.log("[noted] Delete note:", noteId);
-    }
-
-    if (action === "pin") {
-      const currentlyPinned = card.dataset.pinned === "true";
-      const res = await fetch(`/api/notes/${noteId}`, {
-        method: "PATCH",
-        headers: {
-          "content-type": "application/json"
-        },
-        body: JSON.stringify({ pinned: !currentlyPinned })
-      });
-      loadNotes();
-      console.log("[noted] Toggle pin:", noteId, "pinned →", !currentlyPinned);
-    }
-
-    if (action === "color") {
-      // TODO: open an inline color popover anchored to this card
-      const res = await fetch(`/api/notes/${noteId}`, {
-        method: "PATCH", 
-        headers: {
-          "content-type": "application/json"
-        },
-        body: JSON.stringify({ color: editorColor.value})
-      });
-      
-      console.log("[noted] Change color:", noteId);
-    }
-  });
-});
-
-
 // =============================
 // OVERLAY 
 // =============================
 overlay.addEventListener("click", () => {
   closeSettings();
   closeNoteEditor();
+  closeAccount();
 });

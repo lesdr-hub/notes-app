@@ -29,12 +29,12 @@ const getUserNotes = async (userId) => {
 // GET /dashboard
 exports.getDashboard = async (req, res) => {
     try {
-        const { _id, username } = req.user;
+        const { _id, username, preferences } = req.user;
         const { pinnedNotes, unpinnedNotes } = await getUserNotes(_id);
 
         res.render("pages/dashboard", {
             title: "Dashboard - notes",
-            user: { _id, username },
+            user: { _id, username, preferences },
             pinnedNotes,
             unpinnedNotes,
             error: req.flash("error")[0],

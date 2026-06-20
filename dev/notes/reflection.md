@@ -59,7 +59,12 @@ PUT is said to be the primary HTTP method for updating notes - however, since my
 
 You'll notice a massive gap after commit `69531f75c7a3bce1205ce194937990939231ad01`. I'd been focused on solving backend/frontend integration issues, which resulted in less frequent commits than I'd expected. Maintaining a more consistent commit history will be something I'll work on in the future.
 
+You'll also notice that I removed test routes here - I was originally going to implement test routes, however I ran out of time. Still planning on adding them later, but for now will leave it as such.
+
 **CLOSING**
 This was a pretty fun project all in all - definitely tested what I knew a lot more than previous projects I've done. I probably could have made it way easier on myself by not replicating Google Keep and just reloading the page and keeping it entirely server side rendered - but I'm not complaining. Tackling things a bit above my current level is great for my learning.
 
 I'll probably set up a home server myself and have family use it regularly. I'll probably also use it myself for simple things - if any of us run into any issues, I'll fix them then. 
+
+*Upon submission, main branch will remain untouched and any additional features will be added in separate feature branches before being merged.
+** No changes will be merged until after grading. 

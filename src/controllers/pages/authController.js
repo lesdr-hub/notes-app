@@ -73,7 +73,7 @@ exports.postLogin = async (req, res, next) => {
 
         await passport.authenticate("local", (error, user, info) => {
             if (!user) {
-                req.flash("error", info);
+                req.flash("error", info.message);
                 return res.redirect("/auth/login");
             }
 
@@ -92,12 +92,9 @@ exports.postLogin = async (req, res, next) => {
 
 // POST /auth/logout
 exports.logout = (req, res, next) => {
-  req.logout((error) => {
-    if (error) return next(error);
-    req.session.destroy((error) => {
+    req.logout((error) => {
         if (error) return next(error);
-        console.log("Logging out...");
-        res.redirect("/auth/login");
+            console.log("Logging out...");
+            res.redirect("/auth/login");
     });
-  });
 };

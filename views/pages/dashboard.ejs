@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="<%= user.preferences.theme || 'dark'%>">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +14,9 @@
 
   <!-- OVERLAY (shared by settings and note editor) -->
   <div class="overlay" id="overlay"></div>
+
+  <!-- USER PANEL -->
+  <%- include("../partials/account") %>
 
   <!-- SETTINGS PANEL -->
   <%- include("../partials/settings") %>
@@ -33,7 +36,7 @@
       <button class="icon-btn" id="settings-btn" title="Settings">
         <span class="material-icons">settings</span>
       </button>
-      <div class="avatar" title="Account">
+      <div class="avatar" id="account-btn" title="Account">
         <%= user && user.username ? user.username[0].toUpperCase() : "?" %>
       </div>
     </div>

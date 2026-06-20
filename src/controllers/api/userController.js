@@ -47,11 +47,8 @@ exports.deleteAccount = async (req, res, next) => {
 
         req.logout((error) => {
             if (error) return next(error);
+            res.status(200).json({ message: "Account deleted successfully." });
         });
-        req.session.destroy((error) => {
-            if (error) return next(error);
-        });
-        res.status(200).json({ message: "Account deleted successfully." });
     } catch(error) {
         next(error);
     };
